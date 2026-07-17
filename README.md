@@ -187,7 +187,7 @@
 Эти значения нужно указать в файле:
 
 ```text
-lib/supabase_options.dart
+app/lib/supabase_options.dart
 ```
 
 Пример структуры файла:
@@ -271,30 +271,60 @@ Authentication → Providers → Email
 
 Проект построен по принципу **MVVM** с отдельным сервисным слоем для Supabase.
 
+Так как после оформления репозитория основной Flutter-проект вынесен в папку `app/`, исходный код приложения находится по пути `app/lib/`.
+
 ```text
-lib/
-├── main.dart                         # инициализация Supabase и запуск приложения
-├── supabase_options.dart             # URL, anon key, bucket names, redirect URI
-├── models/
-│   ├── message.dart                  # модель сообщения: text/image/audio/file
-│   ├── reaction.dart                 # модель emoji-реакции
-│   └── user_model.dart               # модель пользователя
-├── services/
-│   └── supabase_service.dart         # Auth, Database, Realtime, Storage
-├── utils/
-│   └── audio_recorder.dart           # запись голосовых сообщений
-├── viewmodels/
-│   ├── auth_viewmodel.dart           # состояние авторизации и ошибки входа
-│   └── chat_viewmodel.dart           # пользователи, чат, отправка, удаление, реакции
-├── views/
-│   ├── login_view.dart               # экран входа
-│   ├── register_view.dart            # экран регистрации
-│   ├── chat_view.dart                # список пользователей и экран чата
-│   └── image_viewer.dart             # просмотр изображения на весь экран
-└── widgets/
-    ├── chat_bubble.dart              # отображение сообщения
-    ├── audio_player_widget.dart      # проигрыватель голосовых сообщений
-    └── file_attachment_dialog.dart   # выбор фото или файла
+app/
+└── lib/
+    ├── main.dart                         # инициализация Supabase и запуск приложения
+    ├── supabase_options.dart             # URL, anon key, bucket names, redirect URI
+    ├── models/
+    │   ├── message.dart                  # модель сообщения: text/image/audio/file
+    │   ├── reaction.dart                 # модель emoji-реакции
+    │   └── user_model.dart               # модель пользователя
+    ├── services/
+    │   └── supabase_service.dart         # Auth, Database, Realtime, Storage
+    ├── utils/
+    │   └── audio_recorder.dart           # запись голосовых сообщений
+    ├── viewmodels/
+    │   ├── auth_viewmodel.dart           # состояние авторизации и ошибки входа
+    │   └── chat_viewmodel.dart           # пользователи, чат, отправка, удаление, реакции
+    ├── views/
+    │   ├── login_view.dart               # экран входа
+    │   ├── register_view.dart            # экран регистрации
+    │   ├── chat_view.dart                # список пользователей и экран чата
+    │   └── image_viewer.dart             # просмотр изображения на весь экран
+    └── widgets/
+        ├── chat_bubble.dart              # отображение сообщения
+        ├── audio_player_widget.dart      # проигрыватель голосовых сообщений
+        └── file_attachment_dialog.dart   # выбор фото или файла
+```
+
+### Структура репозитория
+
+```text
+kolyas_client_server_messenger/
+├── app/                         # основной Flutter-проект
+│   ├── android/                 # Android-конфигурация
+│   ├── assets/                  # изображения и ресурсы приложения
+│   ├── lib/                     # исходный код приложения
+│   ├── pubspec.yaml             # зависимости Flutter-проекта
+│   └── pubspec.lock
+├── platforms/                   # дополнительные платформы Flutter, если сохранены
+│   ├── ios/
+│   ├── linux/
+│   ├── macos/
+│   ├── web/
+│   ├── windows/
+│   └── test/
+├── docs/                        # изображения, SQL и материалы для README
+│   ├── backend/
+│   ├── images/
+│   ├── screens/
+│   └── sql/
+├── app-release.apk              # готовый APK, если добавлен в репозиторий
+├── README.md
+└── .gitignore
 ```
 
 ### Разделение ответственности
@@ -343,22 +373,32 @@ cd kolyas_client_server_messenger
 
 Если репозиторий создан под другим аккаунтом или названием, замените ссылку на свою.
 
+Основной Flutter-проект находится в папке `app/`, поэтому все команды `flutter` нужно выполнять из неё.
+
 ---
 
 ## Как запустить проект
 
-### 1. Установить зависимости
+### 1. Перейти в папку приложения
+
+```bash
+cd app
+```
+
+Если вы уже находитесь в папке `kolyas_client_server_messenger/app`, этот шаг можно пропустить.
+
+### 2. Установить зависимости
 
 ```bash
 flutter pub get
 ```
 
-### 2. Проверить настройки Supabase
+### 3. Проверить настройки Supabase
 
 Откройте файл:
 
 ```text
-lib/supabase_options.dart
+app/lib/supabase_options.dart
 ```
 
 Проверьте, что там указаны ваши:
@@ -369,13 +409,13 @@ lib/supabase_options.dart
 - `audioBucket = 'chat-audio'`;
 - `googleRedirectUri`.
 
-### 3. Проверить устройства
+### 4. Проверить устройства
 
 ```bash
 flutter devices
 ```
 
-### 4. Запустить на Android-эмуляторе
+### 5. Запустить на Android-эмуляторе
 
 ```bash
 flutter run -d emulator-5554
@@ -393,16 +433,27 @@ flutter run
 
 ## Как собрать APK
 
+Команды сборки выполняются из папки `app/`:
+
 ```bash
+cd app
 flutter clean
 flutter pub get
 flutter build apk --release
 ```
 
+Если вы уже находитесь в папке `app/`, команду `cd app` повторять не нужно.
+
 Готовый APK появится здесь:
 
 ```text
-build/app/outputs/flutter-apk/app-release.apk
+app/build/app/outputs/flutter-apk/app-release.apk
+```
+
+Чтобы положить готовый APK в корень репозитория, можно выполнить из папки `app/`:
+
+```bash
+copy build/app/outputs/flutter-apk/app-release.apk ../app-release.apk
 ```
 
 ---
@@ -411,7 +462,7 @@ build/app/outputs/flutter-apk/app-release.apk
 
 ### Способ 1. Через готовый APK
 
-Если в репозитории лежит файл:
+Если в корне репозитория лежит файл:
 
 ```text
 app-release.apk
@@ -424,27 +475,30 @@ app-release.apk
 ### Способ 2. Собрать APK самостоятельно
 
 ```bash
+cd app
 flutter build apk --release
 ```
 
 После сборки установите файл:
 
 ```text
-build/app/outputs/flutter-apk/app-release.apk
+app/build/app/outputs/flutter-apk/app-release.apk
 ```
 
 ---
 
 ### Способ 3. Через ADB
 
+Из корня репозитория:
+
 ```bash
-adb install build/app/outputs/flutter-apk/app-release.apk
+adb install app/build/app/outputs/flutter-apk/app-release.apk
 ```
 
 При повторной установке:
 
 ```bash
-adb install -r build/app/outputs/flutter-apk/app-release.apk
+adb install -r app/build/app/outputs/flutter-apk/app-release.apk
 ```
 
 ---
@@ -467,11 +521,14 @@ adb install -r build/app/outputs/flutter-apk/app-release.apk
 ## Команды для разработки
 
 ```bash
+cd app
 flutter clean
 flutter pub get
 flutter run -d emulator-5554
 flutter build apk --release
 ```
+
+Если вы уже находитесь в папке `app/`, строку `cd app` повторять не нужно.
 
 ---
 
