@@ -1,0 +1,62 @@
+name: flutter_application_6
+description: Мессенджер на Flutter + Supabase.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Supabase
+  supabase_flutter: ^2.3.4
+  app_links: ^6.0.0
+
+  # Управление состоянием
+  provider: ^6.1.1
+
+  # Google Sign-In
+  google_sign_in: ^6.1.6
+
+  share_plus: ^10.0.0
+  # Работа с файлами и медиа
+  image_picker: ^1.0.4
+  file_picker: ^11.0.2
+  path: ^1.8.3
+  path_provider: ^2.1.1
+
+  # Просмотр изображений
+  photo_view: ^0.14.0
+
+  # Сохранение в галерею
+  gal: ^2.2.0
+
+  # Разрешения
+  permission_handler: ^11.1.0
+
+  # Запись аудио
+  record: ^6.2.0  
+
+  # Воспроизведение аудио
+  audioplayers: ^5.2.1
+
+  # HTTP-запросы (скачивание файлов)
+  http: ^1.2.0
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
+
+flutter:
+  uses-material-design: true
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/kolyas.jpg"
